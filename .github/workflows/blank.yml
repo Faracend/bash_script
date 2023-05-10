@@ -1,0 +1,32 @@
+- name: Тестирование bash скрипта
+  hosts: localhost
+  tasks:
+    - name: Создание файла ввода
+      copy:
+        content: |
+          Привет мир!
+          Это тестовый файл.
+          Слово "тест" встречается дважды.
+        dest: /tmp/input.txt
+
+    - name: Запуск скрипта с параметрами all symbols
+      shell: |
+        echo "тест" | ./script.sh /tmp/input.txt /tmp/output.txt
+        echo "all symbols" | ./script.sh /tmp/input.txt /tmp/output.txt
+      register: script_output
+
+    - name: Проверка результата для all symbols
+      assert:
+        that:
+          - "'Количество строк с словом \\'тест\\': 2' in script_output.stdout_lines"
+
+    - name: Запуск скрипта с параметрами num of lines
+      shell: |
+        echo "тест" | ./script.sh /tmp/input.txt /tmp/output.txt
+        echo "num of lines" | ./script.sh /tmp/input.txt /tmp/output.txt
+      register: script_output
+
+    - name: Проверка результата для num of lines
+      assert:
+        that:
+          - "'Количество строк с словом \\'тест\\': 1' in script_output.stdout_lines"
