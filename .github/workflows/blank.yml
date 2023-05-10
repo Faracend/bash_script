@@ -9,16 +9,9 @@ jobs:
 
       - name: Создание файла ввода
         run: |
-          echo "Привет мир!" > /tmp/input.txt
-          echo "Это тестовый файл." >> /tmp/input.txt
-          echo "Слово \"тест\" встречается дважды." >> /tmp/input.txt
-
-      - name: Запуск скрипта с параметрами all symbols
-        run: |
-          echo "тест" | ./script.sh /tmp/input.txt /tmp/output.txt
-          echo "all symbols" | ./script.sh /tmp/input.txt /tmp/output.txt
-
-      - name: Запуск скрипта с параметрами num of lines
-        run: |
-          echo "тест" | ./script.sh /tmp/input.txt /tmp/output.txt
-          echo "num of lines" | ./script.sh /tmp/input.txt /tmp/output.txt
+          chmod +x script.sh
+          ./script.sh test_input test_output
+          if [[ $? == 0 ]] then
+            echo "Program finished with code 0"
+          else
+            echo "Program finished with code"
