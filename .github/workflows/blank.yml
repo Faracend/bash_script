@@ -10,7 +10,7 @@ jobs:
       - name: Создание файла ввода
         run: |
           chmod +x script.sh
-          ./script.sh test_input test_output
+          (echo "1"; echo "all symbols") | ./script.sh test_input test_output
           if [[ $? == 0 ]] then
             echo "Program finished with code 0"
           else
